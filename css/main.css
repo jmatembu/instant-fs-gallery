@@ -1,0 +1,148 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%; }
+
+* {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0; }
+
+html, body {
+  position: relative; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5; }
+
+h1 {
+  margin-bottom: 1.5rem; }
+
+p, ul {
+  margin-bottom: 3.25rem; }
+
+img {
+  width: 100%;
+  height: auto; }
+
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: none;
+  outline: none;
+  border: none; }
+
+.container {
+  width: 70%;
+  margin: 0 auto; }
+  .container section:first-of-type {
+    margin-top: 3.25rem; }
+
+.su_hidden {
+  display: none; }
+
+.su_fs-carousel {
+  background-color: transparent;
+  display: block;
+  margin-bottom: 1.85rem;
+  overflow: auto;
+  width: 100%;
+  transition: background-color .2s ease-in-out; }
+  .su_fs-carousel .su_fs-slide {
+    display: inline-block;
+    float: left;
+    margin-right: 5%;
+    width: 30%; }
+    .su_fs-carousel .su_fs-slide:last-child {
+      margin-right: 0; }
+    .su_fs-carousel .su_fs-slide hr {
+      visibility: hidden;
+      transition: visibility .5s; }
+    .su_fs-carousel .su_fs-slide figcaption {
+      text-align: center;
+      display: none; }
+  .su_fs-carousel.su_fs-carousel--active {
+    background-color: #141321;
+    color: #ababab;
+    float: unset;
+    margin-bottom: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1000; }
+    .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
+      display: block; }
+    .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
+      position: relative; }
+    .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
+      margin-right: 0;
+      pointer-events: none;
+      position: absolute;
+      float: unset;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-mask: linear-gradient(black, black) alpha;
+      mask: linear-gradient(black, black) alpha;
+      -webkit-mask-image: linear-gradient(black, black);
+      mask-image: linear-gradient(black, black);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 2px;
+      mask-size: 100% 2px;
+      -webkit-mask-position: 100% 0%;
+      mask-position: 100% 0%;
+      z-index: 100;
+      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 2s, z-index 0.3s; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
+        pointer-events: none;
+        position: relative;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        z-index: 110;
+        transition: mask-size 2s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s; }
+        .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
+          display: block; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide hr {
+        visibility: visible; }
+  .su_fs-carousel .su_fs-carousel-icons {
+    display: none;
+    position: relative;
+    height: 50px;
+    z-index: 120; }
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--close,
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--next,
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--prev {
+      color: #ababab;
+      cursor: pointer;
+      height: 100%;
+      padding: 7px 0;
+      position: absolute; }
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--close:hover,
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--next:hover,
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--prev:hover {
+        color: #eeeeee; }
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--close i,
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--next i,
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--prev i {
+        font-size: 36px; }
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--close,
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--next {
+      right: 10px; }
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--next,
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--prev {
+      bottom: -54px; }
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--next[disabled="true"],
+      .su_fs-carousel .su_fs-carousel-icons .su_icon--prev[disabled="true"] {
+        color: #a3a3a3; }
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--next {
+      z-index: 10; }
+    .su_fs-carousel .su_fs-carousel-icons .su_icon--prev {
+      right: 0px;
+      overflow: hidden;
+      z-index: 9; }
+
+/*# sourceMappingURL=main.css.map */

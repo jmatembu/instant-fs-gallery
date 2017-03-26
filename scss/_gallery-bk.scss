@@ -1,0 +1,120 @@
+.su_fs-carousel {
+  background-color: transparent;
+  display: block;
+  margin-bottom: 1.85rem;
+  overflow: auto;
+  width: 100%;
+  transition: width .5s, background-color .2s ease-in;
+
+  &.su_fs-carousel--active {
+    background-color: #141321;
+    color: #ababab;
+    margin-bottom: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 9999;
+    
+    .su_fs-carousel-icons {
+      display: block;
+    }
+
+    .su_fs-slide {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      img,
+      figcaption {
+        opacity: 0;
+        //transition: opacity 1.2s;
+      }
+
+      figcaption {
+        text-align: center;
+        display: block;
+        z-index: 2;
+      }
+
+      &.su_fs-slide--active {
+        pointer-events: none;
+        position: relative;
+      
+        img,
+        figcaption {
+          opacity: 1;
+        }
+
+      }
+
+    }
+  }
+
+  .su_fs-slide {
+    display: inline-block;
+    float: left;
+    margin-right: 5%;
+    width: 30%;
+    transition: width .3s ease-in;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    figcaption {
+      text-align: center;
+      display: none;
+    }
+
+  }
+
+  .su_fs-carousel-icons {
+    display: none;
+    position: relative;
+    height: 50px;
+    z-index: 100;
+
+    .su_icon--close,
+    .su_icon--next,
+    .su_icon--prev {
+      color: #ababab;
+      cursor: pointer;
+      height: 100%;
+      padding: 7px 0;
+      position: absolute;
+
+      &:hover i {
+        color: #eeeeee;
+      }
+
+      i {
+        font-size: 36px;
+      }
+    }
+
+    .su_icon--close,
+    .su_icon--next {
+      right: 10px;
+    }
+
+    .su_icon--next,
+    .su_icon--prev {
+      bottom: -54px;
+    }
+
+    .su_icon--next {
+      z-index: 10;
+    }
+
+    .su_icon--prev {
+      width: 100px;
+      right: 0px;
+      overflow: hidden;
+      z-index: 9;
+    }
+  }
+
+}
