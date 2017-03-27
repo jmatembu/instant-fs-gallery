@@ -46,8 +46,7 @@ button {
   display: block;
   margin-bottom: 1.85rem;
   overflow: auto;
-  width: 100%;
-  transition: background-color .2s ease-in-out; }
+  width: 100%; }
   .su_fs-carousel .su_fs-slide {
     display: inline-block;
     float: left;
@@ -85,10 +84,12 @@ button {
       top: 0;
       width: 100%;
       height: 100%;
-      -webkit-mask: linear-gradient(black, black) alpha;
-      mask: linear-gradient(black, black) alpha;
       -webkit-mask-image: linear-gradient(black, black);
       mask-image: linear-gradient(black, black);
+      -webkit-mask-mode: alpha;
+      mask-mode: alpha;
+      -webkit-mask-composite: add;
+      mask-composite: add;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
       -webkit-mask-size: 100% 2px;
@@ -96,14 +97,18 @@ button {
       -webkit-mask-position: 100% 0%;
       mask-position: 100% 0%;
       z-index: 100;
-      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 2s, z-index 0.3s; }
+      transition: z-index 0.3s, -webkit-mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 0.5s;
+      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s, z-index 0.3s;
+      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s, z-index 0.3s, -webkit-mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
         pointer-events: none;
         position: relative;
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
         z-index: 110;
-        transition: mask-size 2s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s; }
+        transition: z-index 0.3s, -webkit-mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52);
+        transition: mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s;
+        transition: mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s, -webkit-mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52); }
         .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
           display: block; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide hr {
