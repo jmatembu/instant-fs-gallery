@@ -33,25 +33,59 @@
       return this.getCarouselEl().querySelectorAll(selector);
     },
 
+    removeElements: function (selector) {
+
+      var elements = this.getElements(selector);
+
+      elements && elements.forEach(function (el, index) {
+        el.remove();
+      });
+
+    },
+
     closeCarousel: function () {
+
       this.getCarouselEl().classList.remove('su_fs-carousel--active');
+      this.removeElements('.su_fs-slides hr');
+
     },
 
     openCarousel: function () {
+
+      this.loadSlideIndicators('hr');
       this.getCarouselEl().classList.add('su_fs-carousel--active');
+
     },
 
-    createSlideIndicator: function () {
-      var hr = document.createElement('hr');
+    loadSlideIndicators: function (el) {
 
-      return hr;
+      var slideWrapper = this.getElement('.su_fs-slides'),
+          num = this.getSlides().length * 2,
+          hr, val, bottom, i;
+
+      if ( slideWrapper ) {
+
+        for ( i = 0; i < num; i = i + 2 ) {
+
+          hr = document.createElement(el);
+          val = 6 - i + 2 + 'px';
+          bottom = 'bottom: calc(100% - ' + val;
+          hr.style.cssText = bottom;
+
+          slideWrapper.appendChild(hr);
+
+        }
+      }
+      
+
     },
+
 
     currentSlide: function () {
       var slides = this.getSlides(),
           currentIndex;
           
-      slides.forEach(function (element, index) {
+      slides && slides.forEach(function (element, index) {
         if ( element.classList.contains('su_fs-slide--active') ) {
           currentIndex = index;
         }
@@ -64,6 +98,7 @@
       var slides = this.getSlides(),
           index = this.currentSlide(),
           prevBtn = this.getElement(this.elements.buttons.prevBtn);
+          //hr = this.getElement(this.elements.slide + ' hr');
 
       if ( prevBtn.classList.contains('su_hidden') ) {
         prevBtn.classList.remove('su_hidden');
@@ -72,7 +107,7 @@
       if ( index + 1 < slides.length ) {
         slides[index].classList.remove('su_fs-slide--active');
         slides[index + 1].classList.add('su_fs-slide--active');
-
+        //slides[index + 1].querySelector('hr').style.cssText = 'bottom: 37px;';
         if ( index + 1 === slides.length - 1 ) {
           this.getElement(this.elements.buttons.nextBtn).classList.add('su_hidden');
         }
@@ -84,6 +119,7 @@
           index = this.currentSlide(),
           slideNum = slides.length,
           nextBtn = this.getElement(this.elements.buttons.nextBtn);
+          //hr = this.getElement(this.elements.slide + ' hr');
 
       if ( nextBtn.classList.contains('su_hidden') ) {
         nextBtn.classList.remove('su_hidden');
@@ -92,7 +128,7 @@
       if ( index - 1 >= 0 ) {
         slides[index].classList.remove('su_fs-slide--active');
         slides[index - 1].classList.add('su_fs-slide--active');
-
+        //slides[index - 1].querySelector('hr').style.cssText = 'bottom: 37px;';
         if ( index - 1 === 0 ) {
           this.getElement(this.elements.buttons.prevBtn).classList.add('su_hidden');
         }
@@ -103,7 +139,7 @@
 
   slides = fsCarousel.getElements(fsCarousel.elements.slide);
 
-  slides.forEach(function (element, index) {
+  slides && slides.forEach(function (element, index) {
     element.addEventListener('mouseover', function (e) {
       
       fsCarousel.openCarousel();
@@ -111,6 +147,10 @@
 
     }, false);
   });
+
+  
+
+  
 
   fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn).addEventListener('click', function (event) {
     fsCarousel.nextSlide();

@@ -41,6 +41,19 @@ button {
 .su_hidden {
   display: none; }
 
+@keyframes fadeIn {
+  0% {
+    background-color: rgba(20, 19, 33, 0.4);
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+  100% {
+    background-color: rgba(20, 19, 33, 0.8);
+    width: 100%;
+    top: 0;
+    left: 0;
+    transform: translate(0, 0); } }
 .su_fs-carousel {
   background-color: transparent;
   display: block;
@@ -55,13 +68,15 @@ button {
     .su_fs-carousel .su_fs-slide:last-child {
       margin-right: 0; }
     .su_fs-carousel .su_fs-slide hr {
-      visibility: hidden;
-      transition: visibility .5s; }
+      position: absolute;
+      width: 100%;
+      visibility: hidden; }
     .su_fs-carousel .su_fs-slide figcaption {
       text-align: center;
       display: none; }
   .su_fs-carousel.su_fs-carousel--active {
-    background-color: #141321;
+    animation: fadeIn .2s;
+    background-color: rgba(20, 19, 33, 0.8);
     color: #ababab;
     float: unset;
     margin-bottom: 0;
@@ -69,14 +84,18 @@ button {
     top: 0;
     left: 0;
     height: 100vh;
-    overflow: hidden;
-    z-index: 1000; }
+    overflow: hidden; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
       position: relative; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slides hr {
+        position: absolute;
+        width: 100%;
+        transition: bottom .5s ease-out; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
       margin-right: 0;
+      padding: 10px 0;
       pointer-events: none;
       position: absolute;
       float: unset;
@@ -84,6 +103,10 @@ button {
       top: 0;
       width: 100%;
       height: 100%;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       -webkit-mask-image: linear-gradient(black, black);
       mask-image: linear-gradient(black, black);
       -webkit-mask-mode: alpha;
@@ -97,22 +120,20 @@ button {
       -webkit-mask-position: 100% 0%;
       mask-position: 100% 0%;
       z-index: 100;
-      transition: z-index 0.3s, -webkit-mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 0.5s;
-      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s, z-index 0.3s;
-      transition: mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s, z-index 0.3s, -webkit-mask-size 0.1s cubic-bezier(0, 0.97, 0.99, 0.62) 1s; }
+      transition: z-index .3s, -webkit-mask-size .1s ease-out .5s;
+      transition: mask-size .1s ease-out 1s, z-index .3s;
+      transition: mask-size .1s ease-out 1s, z-index .3s, -webkit-mask-size .1s ease-out 1s; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
         pointer-events: none;
         position: relative;
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
         z-index: 110;
-        transition: z-index 0.3s, -webkit-mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52);
-        transition: mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s;
-        transition: mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52), z-index 0.3s, -webkit-mask-size 0.5s cubic-bezier(0.64, 0.02, 0.46, 0.52); }
+        transition: z-index .3s, -webkit-mask-size .5s ease-out;
+        transition: mask-size .5s ease-out, z-index .3s;
+        transition: mask-size .5s ease-out, z-index .3s, -webkit-mask-size .5s cuease-out; }
         .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
           display: block; }
-      .su_fs-carousel.su_fs-carousel--active .su_fs-slide hr {
-        visibility: visible; }
   .su_fs-carousel .su_fs-carousel-icons {
     display: none;
     position: relative;

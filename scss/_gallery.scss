@@ -1,3 +1,19 @@
+@keyframes fadeIn {
+  0% {
+    background-color: rgba(20, 19, 33, 0.4);
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    background-color: rgba(20, 19, 33, 0.8);
+    width: 100%;
+    top: 0;
+    left: 0;
+    transform: translate(0,0);
+  }
+}
 .su_fs-carousel {
   background-color: transparent;
   display: block;
@@ -16,8 +32,9 @@
     }
 
     hr {
+      position: absolute;
+      width: 100%;
       visibility: hidden;
-      transition: visibility .5s;
     }
 
     figcaption {
@@ -28,7 +45,8 @@
   }
 
   &.su_fs-carousel--active {
-    background-color: #141321;
+    animation: fadeIn .2s;
+    background-color: rgba(20, 19, 33, 0.8);
     color: #ababab;
     float: unset;
     margin-bottom: 0;
@@ -37,7 +55,6 @@
     left: 0;
     height: 100vh;
     overflow: hidden;
-    z-index: 1000;
     
     .su_fs-carousel-icons {
       display: block;
@@ -45,10 +62,18 @@
 
     .su_fs-slides {
       position: relative;
+
+      hr {
+        position: absolute;
+        width: 100%;
+        //bottom: 2px;
+        transition: bottom .5s ease-out;
+      }
     }
 
     .su_fs-slide {
       margin-right: 0;
+      padding: 10px 0;
       pointer-events: none;
       position: absolute;
       float: unset;
@@ -56,6 +81,10 @@
       top: 0;
       width: 100%;
       height: 100%;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
       -webkit-mask-image: linear-gradient(black, black);
               mask-image: linear-gradient(black, black);
       -webkit-mask-mode: alpha;
@@ -69,9 +98,9 @@
       -webkit-mask-position: 100% 0%;
               mask-position: 100% 0%;
       z-index: 100;
-      transition: z-index .3s, -webkit-mask-size .1s cubic-bezier(0,.97,.99,.62) .5s;
-      transition: mask-size .1s cubic-bezier(0,.97,.99,.62) 1s, z-index .3s;
-      transition: mask-size .1s cubic-bezier(0,.97,.99,.62) 1s, z-index .3s, -webkit-mask-size .1s cubic-bezier(0,.97,.99,.62) 1s;
+      transition: z-index .3s, -webkit-mask-size .1s ease-out .5s;
+      transition: mask-size .1s ease-out 1s, z-index .3s;
+      transition: mask-size .1s ease-out 1s, z-index .3s, -webkit-mask-size .1s ease-out 1s;
 
       &.su_fs-slide--active {
         pointer-events: none;
@@ -79,21 +108,14 @@
         -webkit-mask-size: 100% 100%;
                 mask-size: 100% 100%;
         z-index: 110;
-        transition: z-index .3s, -webkit-mask-size .5s cubic-bezier(.64,.02,.46,.52);
-        transition: mask-size .5s cubic-bezier(.64,.02,.46,.52), z-index .3s;
-        transition: mask-size .5s cubic-bezier(.64,.02,.46,.52), z-index .3s, -webkit-mask-size .5s cubic-bezier(.64,.02,.46,.52);
+        transition: z-index .3s, -webkit-mask-size .5s ease-out;
+        transition: mask-size .5s ease-out, z-index .3s;
+        transition: mask-size .5s ease-out, z-index .3s, -webkit-mask-size .5s cuease-out;
 
         figcaption {
           display: block;
         }
       }
-
-      hr {
-        visibility: visible;
-      }
-
-
-
     }
   }
 
