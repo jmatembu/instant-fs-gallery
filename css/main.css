@@ -83,8 +83,10 @@ button {
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
       position: relative; }
-      .su_fs-carousel.su_fs-carousel--active .su_fs-slides hr {
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slides span {
+        background-color: gray;
         position: absolute;
+        height: 1px;
         width: 100%;
         transition: bottom .5s ease-out; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {

@@ -55,8 +55,10 @@
     .su_fs-slides {
       position: relative;
 
-      hr {
+      span {
+        background-color: gray;
         position: absolute;
+        height: 1px;
         width: 100%;
         transition: bottom .5s ease-out;
       }

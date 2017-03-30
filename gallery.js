@@ -47,13 +47,13 @@
     closeCarousel: function () {
 
       this.getCarouselEl().classList.remove('su_fs-carousel--active');
-      this.removeElements('.su_fs-slides hr');
+      this.removeElements('.su_fs-slides span');
 
     },
 
     openCarousel: function () {
 
-      this.loadSlideIndicators('hr');  
+      this.loadSlideIndicators('span');  
 
       this.getCarouselEl().classList.add('su_fs-carousel--active');
 
@@ -64,25 +64,25 @@
       var slideWrapper = this.getElement('.su_fs-slides'),
           num = this.getSlides().length,
           fragment = document.createDocumentFragment(),
-          hr, val, bottom, top, i, position;
+          span, val, bottom, top, i, position;
 
       if ( slideWrapper ) {
 
         for ( i = 0; i < num; i++ ) {
 
           position = {}; // reset object
-          hr = document.createElement('hr');
-          val = 8 - i - i + 'px';
+          span = document.createElement('span');
+          val = 8 - i * 3 + 'px';
           top = 'bottom: calc(100% - ' + val + ')';
-          val = 47 - i - i;
+          val = 47 - i * 3;
           bottom = 'bottom: ' + val + 'px';
           position.top = top;
           position.bottom = bottom;
 
           this.slideIndicatorPositions[i] = position;
-          hr.style.cssText = top;
+          span.style.cssText = top;
 
-          fragment.appendChild(hr);
+          fragment.appendChild(span);
 
         }
 
@@ -94,25 +94,36 @@
       
     },
 
-    positionSlideIndicators: function (index, num) {
+    positionSlideIndicators: function () {
 
-      var hr, bottom, val, positions = [];
-
-      for ( index = 0; index < num; index = index + 2 ) {
-
-        hr = document.createElement(el);
-        val = 6 - index + 2 + 'px';
-        bottom = 'bottom: calc(100% - ' + val + ')';
-        positions.push(bottom);
-
+      var rulers = this.getElements('.su_fs-slides > span'),
+          activeSlideIndex = this.currentSlidePosition();
+      
+      if ( rulers ) {
+        
+        for (var i = 0; i <= activeSlideIndex; i++) {
+          rulers[i].style.cssText = this.slideIndicatorPositions[i].bottom;
+        }
+      
       }
 
-      return positions;
+    },
+
+    toggleSlideIndicatorPosition: function (indicators, index) {
+      var rulerPosition = indicators[index].style.cssText;
+
+      if ( rulerPosition.includes(this.slideIndicatorPositions[index].bottom) ) {
+        rulerPosition = this.slideIndicatorPositions[index].top;
+      } else if ( rulerPosition.includes(this.slideIndicatorPositions[index].top) ) {
+        rulerPosition = this.slideIndicatorPositions[index].bottom;
+      } else {
+        console.log('nothing');
+      }
     },
 
     positionActiveSlideIndicator: function () {
 
-      var rulers = this.getElements('.su_fs-slides > hr'),
+      var rulers = this.getElements('.su_fs-slides > span'),
           index = this.currentSlidePosition();
       
       if ( rulers ) {
@@ -137,26 +148,13 @@
     nextSlide: function () {
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
-          prevBtn = this.getElement(this.elements.buttons.prevBtn),
-          rulers = this.getElements('.su_fs-slides > hr');
-
-      // if ( prevBtn.classList.contains('su_hidden') ) {
-      //   prevBtn.classList.remove('su_hidden');
-      // }
+          rulers = this.getElements('.su_fs-slides > span');
 
       if ( index + 1 < slides.length ) {
         slides[index].classList.remove('su_fs-slide--active');
         slides[index + 1].classList.add('su_fs-slide--active');
         rulers[index + 1].style.cssText = this.slideIndicatorPositions[index + 1].bottom;
       }
-      
-      
-      //   if ( index + 1 === slides.length - 1 ) {
-      //     this.getElement(this.elements.buttons.nextBtn).classList.add('su_hidden');
-      //   }
-
-        
-      // }
     },
 
     prevSlide: function () {
@@ -164,25 +162,17 @@
           index = this.currentSlidePosition(),
           slideNum = slides.length,
           nextBtn = this.getElement(this.elements.buttons.nextBtn),
-          rulers = this.getElements('.su_fs-slides > hr');
+          rulers = this.getElements('.su_fs-slides > span');
+      
 
-
-      // if ( nextBtn.classList.contains('su_hidden') ) {
-      //   nextBtn.classList.remove('su_hidden');
-      // }
-
-      if ( index - 1 >= 0 ) {
-        slides[index].classList.remove('su_fs-slide--active');
-        slides[index - 1].classList.add('su_fs-slide--active');
-        //console.log(rulers[index]);
-        rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].top;
+      if ( rulers ) {
+        if ( index - 1 >= 0 ) {
+          slides[index].classList.remove('su_fs-slide--active');
+          slides[index - 1].classList.add('su_fs-slide--active');
+          rulers[index].style.cssText = this.slideIndicatorPositions[index].top; 
+          rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].bottom; 
+        }         
       }
-      
-      
-      //   if ( index - 1 === 0 ) {
-      //     this.getElement(this.elements.buttons.prevBtn).classList.add('su_hidden');
-      //   }
-      // }
     }
 
   },
@@ -199,10 +189,6 @@
 
     }, false);
   });
-
-  
-
-  
 
   fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn).addEventListener('click', function (event) {
     fsCarousel.nextSlide();
