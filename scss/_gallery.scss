@@ -7,11 +7,16 @@
   }
 }
 @keyframes maskUp {
-  from {
+  0% {
     clip-path: inset(0 0 0 0);
+    opacity: 1;
   }
-  to {
+  50% {
+    opacity: .5;
+  }
+  100% {
     clip-path: inset(0 0 100% 0);
+    opacity: 1
   }
 }
 .su_fs-carousel {
@@ -66,11 +71,9 @@
     }
 
     .su_fs-slide {
-      animation: 0s ease-out .5s maskUp;
-      // clip-path: inset(0 0 100% 0);
+      //animation: 0s ease-out .5s maskUp;
       margin-right: 0;
       padding: 10px 0;
-      opacity: .5;
       pointer-events: none;
       position: absolute;
       float: unset;
@@ -78,20 +81,17 @@
       top: 0;
       width: 100%;
       height: 100%;
-      // -webkit-user-select: none;
-      //    -moz-user-select: none;
-      //     -ms-user-select: none;
-      //         user-select: none;
-      // mask-image: linear-gradient(black, black);
-      // mask-repeat: no-repeat;
-      // mask-size: 100% 2px;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
       z-index: 100;
-      //transition: clip-path .1s ease-out .5s;
+      
+      &.su_mask-down--initial {
+        animation: .5s ease-out maskDown;
+      }
 
       &.su_fs-slide--active {
-        
-        //clip-path: inset(0 0 0 0);
-        opacity: 1;
         pointer-events: none;
         position: relative;
         z-index: 110;
@@ -130,18 +130,18 @@
       }
 
       i {
-        font-size: 36px;
+        font-size: 24px;
       }
     }
 
     .su_icon--close,
     .su_icon--next {
-      right: 10px;
+      right: 20px;
     }
 
     .su_icon--next,
     .su_icon--prev {
-      bottom: -54px;
+      bottom: -62px;
 
       &[disabled="true"] {
         color: #a3a3a3;
@@ -153,8 +153,7 @@
     }
 
     .su_icon--prev {
-      //width: 100px;
-      right: 0px;
+      right: 100px;
       overflow: hidden;
       z-index: 9;
     }
