@@ -150,28 +150,53 @@
           index = this.currentSlidePosition(),
           rulers = this.getElements('.su_fs-slides > span');
 
-      if ( index + 1 < slides.length ) {
+      //if ( rulers && index + 1 < slides.length ) {
         slides[index].classList.remove('su_fs-slide--active');
-        slides[index + 1].classList.add('su_fs-slide--active');
-        rulers[index + 1].style.cssText = this.slideIndicatorPositions[index + 1].bottom;
-      }
+        rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
+        if ( index === slides.length - 1 ) {
+          if ( slides[0].classList.contains('su_mask-up') ) {
+            slides[0].classList.remove('su_mask-up');
+          }
+          slides[0].classList.add('su_mask-down');
+          slides[0].classList.add('su_fs-slide--active');
+          
+        } else {
+          if ( slides[index + 1].classList.contains('su_mask-up') ) {
+            slides[index + 1].classList.remove('su_mask-up');
+          }
+          slides[index + 1].classList.add('su_mask-down');
+          slides[index + 1].classList.add('su_fs-slide--active');
+          
+        }
+
+        //
+      //}
     },
 
     prevSlide: function () {
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
-          slideNum = slides.length,
-          nextBtn = this.getElement(this.elements.buttons.nextBtn),
           rulers = this.getElements('.su_fs-slides > span');
       
+      slides[index].classList.remove('su_fs-slide--active');
+      if ( index === 0) {
+        if ( slides[slides.length - 1].classList.contains('su_mask-down') ) {
+          slides[slides.length - 1].classList.remove('su_mask-down');
+        }
+        slides[slides.length - 1].classList.add('su_mask-up');
+        slides[slides.length - 1].classList.add('su_fs-slide--active');
+        rulers[slides.length - 1].style.cssText = this.slideIndicatorPositions[slides.length - 1].top;
 
-      if ( rulers ) {
-        if ( index - 1 >= 0 ) {
-          slides[index].classList.remove('su_fs-slide--active');
-          slides[index - 1].classList.add('su_fs-slide--active');
-          rulers[index].style.cssText = this.slideIndicatorPositions[index].top; 
-          rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].bottom; 
-        }         
+        
+      } else {
+        if ( slides[index - 1].classList.contains('su_mask-down') ) {
+          slides[index - 1].classList.remove('su_mask-down');
+        }
+        slides[index - 1].classList.add('su_mask-up');
+        slides[index - 1].classList.add('su_fs-slide--active');
+        rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].top;  
+
+
       }
     }
 
