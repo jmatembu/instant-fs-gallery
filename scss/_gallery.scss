@@ -14,6 +14,24 @@
     clip-path: inset(0 0 100% 0);
   }
 }
+@keyframes coverUp {
+  0% {
+    opacity: .5;
+    width: 50%;
+    height: 50vh;
+    top: 25vh;
+    left: 25vw;
+  }
+  100% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    height: 100vh;
+    width: 100%;
+  }
+}
+
 .su_fs-carousel {
   background-color: transparent;
   display: block;
@@ -39,14 +57,12 @@
   }
 
   &.su_fs-carousel--active {
+    animation: .2s ease-in forwards coverUp;
     background-color: rgba(20, 19, 33, 0.8);
     color: #ababab;
     float: unset;
     margin-bottom: 0;
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
     overflow: hidden;
     
     .su_fs-carousel-icons {
@@ -66,7 +82,6 @@
     }
 
     .su_fs-slide {
-      clip-path: unset;
       margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
@@ -81,15 +96,12 @@
           -ms-user-select: none;
               user-select: none;
       z-index: 100;      
-      transition: clip-path .3s ease-out .5s;
-
+      transition: clip-path 0s ease-out .5s;
       &.su_mask-down {
         clip-path: inset(0% 0 100% 0);
-        transition: clip-path 0s ease-out .5s;
       }
       &.su_mask-up {
         clip-path: inset(100% 0 0% 0);
-        transition: clip-path 0s ease-out .5s;
       }
       
       &.su_mask-down--initial {

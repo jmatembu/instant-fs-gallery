@@ -41,16 +41,63 @@ button {
 .su_hidden {
   display: none; }
 
+@-webkit-keyframes maskDown {
+  from {
+    -webkit-clip-path: inset(0 0 100% 0);
+            clip-path: inset(0 0 100% 0); }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0); } }
+
 @keyframes maskDown {
   from {
-    clip-path: inset(0 0 100% 0); }
+    -webkit-clip-path: inset(0 0 100% 0);
+            clip-path: inset(0 0 100% 0); }
   to {
-    clip-path: inset(0 0 0 0); } }
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0); } }
+@-webkit-keyframes maskUp {
+  0% {
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0); }
+  100% {
+    -webkit-clip-path: inset(0 0 100% 0);
+            clip-path: inset(0 0 100% 0); } }
 @keyframes maskUp {
   0% {
-    clip-path: inset(0 0 0 0); }
+    -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0); }
   100% {
-    clip-path: inset(0 0 100% 0); } }
+    -webkit-clip-path: inset(0 0 100% 0);
+            clip-path: inset(0 0 100% 0); } }
+@-webkit-keyframes coverUp {
+  0% {
+    opacity: .5;
+    width: 50%;
+    height: 50vh;
+    top: 25vh;
+    left: 25vw; }
+  100% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    height: 100vh;
+    width: 100%; } }
+@keyframes coverUp {
+  0% {
+    opacity: .5;
+    width: 50%;
+    height: 50vh;
+    top: 25vh;
+    left: 25vw; }
+  100% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    height: 100vh;
+    width: 100%; } }
 .su_fs-carousel {
   background-color: transparent;
   display: block;
@@ -68,14 +115,13 @@ button {
       text-align: center;
       display: none; }
   .su_fs-carousel.su_fs-carousel--active {
+    -webkit-animation: .2s ease-in forwards coverUp;
+            animation: .2s ease-in forwards coverUp;
     background-color: rgba(20, 19, 33, 0.8);
     color: #ababab;
     float: unset;
     margin-bottom: 0;
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
     overflow: hidden; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
       display: block; }
@@ -88,7 +134,6 @@ button {
         width: 100%;
         transition: bottom .5s ease-out; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
-      clip-path: unset;
       margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
@@ -103,21 +148,27 @@ button {
       -ms-user-select: none;
       user-select: none;
       z-index: 100;
-      transition: clip-path .3s ease-out .5s; }
+      transition: -webkit-clip-path 0s ease-out .5s;
+      transition: clip-path 0s ease-out .5s;
+      transition: clip-path 0s ease-out .5s, -webkit-clip-path 0s ease-out .5s; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down {
-        clip-path: inset(0% 0 100% 0);
-        transition: clip-path 0s ease-out .5s; }
+        -webkit-clip-path: inset(0% 0 100% 0);
+                clip-path: inset(0% 0 100% 0); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
-        clip-path: inset(100% 0 0% 0);
-        transition: clip-path 0s ease-out .5s; }
+        -webkit-clip-path: inset(100% 0 0% 0);
+                clip-path: inset(100% 0 0% 0); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down--initial {
-        animation: .5s ease-out maskDown; }
+        -webkit-animation: .5s ease-out maskDown;
+                animation: .5s ease-out maskDown; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
-        clip-path: inset(0 0 0 0);
+        -webkit-clip-path: inset(0 0 0 0);
+                clip-path: inset(0 0 0 0);
         pointer-events: none;
         position: relative;
         z-index: 110;
-        transition: clip-path .5s ease-out; }
+        transition: -webkit-clip-path .5s ease-out;
+        transition: clip-path .5s ease-out;
+        transition: clip-path .5s ease-out, -webkit-clip-path .5s ease-out; }
         .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
           display: block;
           padding-top: 10px; }
@@ -157,5 +208,3 @@ button {
       right: 100px;
       overflow: hidden;
       z-index: 9; }
-
-/*# sourceMappingURL=main.css.map */
