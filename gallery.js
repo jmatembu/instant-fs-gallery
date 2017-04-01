@@ -149,50 +149,56 @@
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
           rulers = this.getElements('.su_fs-slides > span');
+      
 
-      //if ( rulers && index + 1 < slides.length ) {
-        slides[index].classList.remove('su_fs-slide--active');
-        rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
-        if ( index === slides.length - 1 ) {
-          if ( slides[0].classList.contains('su_mask-up') ) {
-            slides[0].classList.remove('su_mask-up');
-          }
-          slides[0].classList.add('su_mask-down');
-          slides[0].classList.add('su_fs-slide--active');
-          
-        } else {
-          if ( slides[index + 1].classList.contains('su_mask-up') ) {
-            slides[index + 1].classList.remove('su_mask-up');
-          }
-          slides[index + 1].classList.add('su_mask-down');
-          slides[index + 1].classList.add('su_fs-slide--active');
-          
-        }
+      slides[index].classList.remove('su_fs-slide--active', 'su_mask-up', 'su_mask-down');
+      //slides[index].classList.remove('su_mask-up');
+      rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
+      
+      if ( index === slides.length - 1 ) {
+        // if ( slides[0].classList.contains('su_mask-up') ) {
+        //   slides[0].classList.remove('su_mask-up');
+        // }
+        // slides[0].classList.add('su_mask-down');
+        slides[0].classList.add('su_mask-down');
+        void slides[0].offsetWidth;
+        slides[0].classList.add('su_fs-slide--active');
+        
+      } else {
+        // if ( slides[index + 1].classList.contains('su_mask-up') ) {
+        //   slides[index + 1].classList.remove('su_mask-up');
+        // }
+        slides[index + 1].classList.add('su_mask-down');
+        void slides[index + 1].offsetWidth;
+        slides[index + 1].classList.add('su_fs-slide--active');
+ 
+      }
 
-        //
-      //}
     },
 
     prevSlide: function () {
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
           rulers = this.getElements('.su_fs-slides > span');
-      
-      slides[index].classList.remove('su_fs-slide--active');
+
+      slides[index].classList.remove('su_fs-slide--active', 'su_mask-down', 'su_mask-up');
+      //slides[index].classList.remove('su_mask-down');
       if ( index === 0) {
-        if ( slides[slides.length - 1].classList.contains('su_mask-down') ) {
-          slides[slides.length - 1].classList.remove('su_mask-down');
-        }
+        // if ( slides[slides.length - 1].classList.contains('su_mask-down') ) {
+        //   slides[slides.length - 1].classList.remove('su_mask-down');
+        // }
         slides[slides.length - 1].classList.add('su_mask-up');
+        void slides[slides.length - 1].offsetWidth;
         slides[slides.length - 1].classList.add('su_fs-slide--active');
         rulers[slides.length - 1].style.cssText = this.slideIndicatorPositions[slides.length - 1].top;
 
         
       } else {
-        if ( slides[index - 1].classList.contains('su_mask-down') ) {
-          slides[index - 1].classList.remove('su_mask-down');
-        }
+        // if ( slides[index - 1].classList.contains('su_mask-down') ) {
+        //   slides[index - 1].classList.remove('su_mask-down');
+        // }
         slides[index - 1].classList.add('su_mask-up');
+        void slides[index - 1].offsetWidth;
         slides[index - 1].classList.add('su_fs-slide--active');
         rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].top;  
 
@@ -210,6 +216,13 @@
       fsCarousel.openCarousel();
       
       this.classList.add('su_fs-slide--active');
+      
+      // if ( this.nextElementSibling.nodeName === 'FIGURE' ) {
+      //   this.nextElementSibling.classList.add('su_mask-down');
+      // } else if ( this.previousElementSibling.nodeName === 'FIGURE') {
+      //   this.previousElementSibling.classList.add('su_mask-up');
+      // }
+
       fsCarousel.positionActiveSlideIndicator();
 
     }, false);

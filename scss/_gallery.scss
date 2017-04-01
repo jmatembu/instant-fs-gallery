@@ -9,14 +9,9 @@
 @keyframes maskUp {
   0% {
     clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
   }
   100% {
     clip-path: inset(0 0 100% 0);
-    opacity: 1
   }
 }
 .su_fs-carousel {
@@ -64,14 +59,14 @@
       span {
         background-color: gray;
         position: absolute;
-        height: 1px;
+        height: 1.2px;
         width: 100%;
         transition: bottom .5s ease-out;
       }
     }
 
     .su_fs-slide {
-      //animation: 0s ease-out .5s maskUp;
+      clip-path: unset;
       margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
@@ -85,23 +80,31 @@
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
-      z-index: 100;
+      z-index: 100;      
+      transition: clip-path .3s ease-out .5s;
+
+      &.su_mask-down {
+        clip-path: inset(0% 0 100% 0);
+        transition: clip-path 0s ease-out .5s;
+      }
+      &.su_mask-up {
+        clip-path: inset(100% 0 0% 0);
+        transition: clip-path 0s ease-out .5s;
+      }
       
       &.su_mask-down--initial {
         animation: .5s ease-out maskDown;
       }
 
       &.su_fs-slide--active {
+        clip-path: inset(0 0 0 0);
         pointer-events: none;
         position: relative;
         z-index: 110;
+        transition: clip-path .5s ease-out;
+        //animation: .5s ease-out forwards maskUp;
         
-        &.su_mask-down {
-          animation: .5s ease-out forwards maskDown;
-        }
-        &.su_mask-up {
-          animation: .5s ease-out reverse forwards maskDown;
-        }
+        
         figcaption {
           display: block;
           padding-top: 10px;
