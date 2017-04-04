@@ -94,8 +94,7 @@ button {
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
-      position: relative;
-      z-index: 100; }
+      position: relative; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slides span {
         background-color: gray;
         position: absolute;
@@ -127,6 +126,7 @@ button {
         clip-path: inset(0 0 0 0);
         pointer-events: none;
         position: relative;
+        z-index: 1;
         transition: clip-path 0.5s cubic-bezier(1, 0.01, 0.55, 0.99); }
         .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
           display: block;
