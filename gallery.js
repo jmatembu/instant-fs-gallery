@@ -45,7 +45,11 @@
     },
 
     closeCarousel: function () {
-      void this.getCarouselEl().offsetWidth;
+      var nextButton = this.getElement(this.elements.buttons.nextBtn),
+          prevButton = this.getElement(this.elements.buttons.prevBtn);
+
+      nextButton.classList.remove('su_hidden');
+      prevButton.classList.remove('su_hidden');
       this.getCarouselEl().classList.remove('su_fs-carousel--active');
       this.removeElements('.su_fs-slides span');
 
@@ -54,8 +58,7 @@
     openCarousel: function () {
 
       this.loadSlideIndicators('span');  
-
-      this.getCarouselEl().classList.add('su_fs-carousel--active');
+      this.getCarouselEl().classList.add('su_fs-carousel--active');      
 
     },
 
@@ -148,26 +151,22 @@
     nextSlide: function () {
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
-          rulers = this.getElements('.su_fs-slides > span');
-      
+          rulers = this.getElements('.su_fs-slides > span'),
+          nextButton = this.getElement(this.elements.buttons.nextBtn),
+          prevButton = this.getElement(this.elements.buttons.prevBtn);
 
       slides[index].classList.remove('su_fs-slide--active', 'su_mask-up', 'su_mask-down');
       rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
-      
-      if ( index === slides.length - 1 ) {
-
-        slides[0].classList.add('su_mask-down');
-        void slides[0].offsetWidth;
-        slides[0].classList.add('su_fs-slide--active');
-        
-      } else {
-        // if ( slides[index + 1].classList.contains('su_mask-up') ) {
-        //   slides[index + 1].classList.remove('su_mask-up');
-        // }
+      if (prevButton.classList.contains('su_hidden')) {
+        prevButton.classList.remove('su_hidden');
+      }
+      if ( index + 1 <= slides.length - 1 ) {
+        if (index + 1 === slides.length - 1) {
+          nextButton.classList.add('su_hidden');
+        }
         slides[index + 1].classList.add('su_mask-down');
         void slides[index + 1].offsetWidth;
         slides[index + 1].classList.add('su_fs-slide--active');
- 
       }
 
     },
@@ -175,31 +174,25 @@
     prevSlide: function () {
       var slides = this.getSlides(),
           index = this.currentSlidePosition(),
-          rulers = this.getElements('.su_fs-slides > span');
+          rulers = this.getElements('.su_fs-slides > span'),
+          nextButton = this.getElement(this.elements.buttons.nextBtn),
+          prevButton = this.getElement(this.elements.buttons.prevBtn);
 
       slides[index].classList.remove('su_fs-slide--active', 'su_mask-down', 'su_mask-up');
       rulers[index].style.cssText = this.slideIndicatorPositions[index].top;
       //slides[index].classList.remove('su_mask-down');
-      if ( index === 0) {
-        // if ( slides[slides.length - 1].classList.contains('su_mask-down') ) {
-        //   slides[slides.length - 1].classList.remove('su_mask-down');
-        // }
-        slides[slides.length - 1].classList.add('su_mask-up');
-        void slides[slides.length - 1].offsetWidth;
-        slides[slides.length - 1].classList.add('su_fs-slide--active');
-        //rulers[slides.length - 1].style.cssText = this.slideIndicatorPositions[slides.length - 1].top;
 
-        
-      } else {
-        // if ( slides[index - 1].classList.contains('su_mask-down') ) {
-        //   slides[index - 1].classList.remove('su_mask-down');
-        // }
+      if (nextButton.classList.contains('su_hidden')) {
+        nextButton.classList.remove('su_hidden');
+      }
+      if ( index - 1 >= 0) {
+        if (index - 1 === 0) {
+          prevButton.classList.add('su_hidden');
+        }
         slides[index - 1].classList.add('su_mask-up');
         void slides[index - 1].offsetWidth;
         slides[index - 1].classList.add('su_fs-slide--active');
-        //rulers[index - 1].style.cssText = this.slideIndicatorPositions[index - 1].top;  
-
-
+        
       }
     }
 
@@ -209,16 +202,22 @@
 
   slides && slides.forEach(function (element, index) {
     element.addEventListener('mouseover', function (e) {
-      
+      var pos,
+          slides = fsCarousel.getSlides(),
+          nextButton = fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn),
+          prevButton = fsCarousel.getElement(fsCarousel.elements.buttons.prevBtn);
+
       fsCarousel.openCarousel();
       
       this.classList.add('su_fs-slide--active');
       
-      // if ( this.nextElementSibling.nodeName === 'FIGURE' ) {
-      //   this.nextElementSibling.classList.add('su_mask-down');
-      // } else if ( this.previousElementSibling.nodeName === 'FIGURE') {
-      //   this.previousElementSibling.classList.add('su_mask-up');
-      // }
+      pos = fsCarousel.currentSlidePosition();
+
+      if (pos === 0) {
+        prevButton.classList.add('su_hidden');
+      } else if (pos === slides.length - 1) {
+        nextButton.classList.add('su_hidden');
+      }
 
       fsCarousel.positionActiveSlideIndicator();
 
@@ -241,21 +240,21 @@
     activeSlie && activeSlie.classList.remove('su_fs-slide--active');
   }, false);
 
-  document.body.addEventListener('keyup', function (event) {
+  // document.body.addEventListener('keyup', function (event) {
 
-    if ( event.keyCode === 27 ) {
+  //   if ( event.keyCode === 27 ) {
 
-      var activeSlie = fsCarousel.getElement('.su_fs-slide--active');
+  //     var activeSlie = fsCarousel.getElement('.su_fs-slide--active');
       
-      fsCarousel.closeCarousel();
-      activeSlie && activeSlie.classList.remove('su_fs-slide--active');
+  //     fsCarousel.closeCarousel();
+  //     activeSlie && activeSlie.classList.remove('su_fs-slide--active');
 
-    } else if ( event.keyCode === 39 ) {
-      fsCarousel.nextSlide();
-    } else if ( event.keyCode === 37 ) {
-      fsCarousel.prevSlide();
-    }
+  //   } else if ( event.keyCode === 39 ) {
+  //     fsCarousel.nextSlide();
+  //   } else if ( event.keyCode === 37 ) {
+  //     fsCarousel.prevSlide();
+  //   }
     
-  }, false);
+  // }, false);
 
 }());
