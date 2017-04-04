@@ -38,11 +38,13 @@
   margin-bottom: 1.85rem;
   overflow: auto;
   width: 100%;
+  
+  .su_fs-slides {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .su_fs-slide {
-    display: inline-block;
-    float: left;
-    margin-right: 5%;
     width: 30%;
 
     &:last-child {
@@ -60,12 +62,10 @@
 
   &.su_fs-carousel--active {
     animation: .2s ease-in forwards coverUp;
-    background-color: rgba(20, 19, 33, 0.8);
+    background-color: rgba(20, 19, 33, 0.6);
     color: #ababab;
-    float: unset;
     margin-bottom: 0;
     position: fixed;
-    overflow: hidden;
     
     .su_fs-carousel-icons {
       display: block;
@@ -83,39 +83,18 @@
     }
 
     .su_fs-slide {
-      margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
       position: absolute;
-      float: unset;
-      left: 0;
-      top: 0;
       width: 100%;
-      height: 100%;
-      -webkit-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;      
+      user-select: none;      
       transition: clip-path 0s ease-out .5s;
+
       &.su_mask-down {
-        clip-path: inset(0% 0 100% 0);
+        clip-path: inset(0% 0 70% 0);
       }
       &.su_mask-up {
-        clip-path: inset(100% 0 0% 0);
-      }
-      // &:first-child {
-      //   z-index: 105;
-      // }
-      // &:nth-child(2) {
-      //   z-index: 104;
-      // }
-      // &:nth-child(3) {
-      //   z-index: 103;
-      // }
-      
-
-      &.su_mask-down--initial {
-        animation: .5s ease-out maskDown;
+        clip-path: inset(70% 0 0% 0);
       }
 
       &.su_fs-slide--active {
@@ -123,9 +102,7 @@
         pointer-events: none;
         position: relative;
         z-index: 1;
-        transition: clip-path .5s cubic-bezier(1,.01,.55,.99);
-        //animation: .5s ease-out forwards maskUp;
-        
+        transition: clip-path .5s cubic-bezier(1,.01,.55,.99);       
         
         figcaption {
           display: block;
@@ -139,7 +116,6 @@
     display: none;
     position: relative;
     height: 50px;
-    z-index: 120;
 
     .su_icon--close,
     .su_icon--next,
@@ -187,5 +163,7 @@
   .su_hidden {
     visibility: hidden;
   }
+
+
 
 }

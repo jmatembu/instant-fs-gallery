@@ -157,9 +157,11 @@
 
       slides[index].classList.remove('su_fs-slide--active', 'su_mask-up', 'su_mask-down');
       rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
+      
       if (prevButton.classList.contains('su_hidden')) {
         prevButton.classList.remove('su_hidden');
       }
+
       if ( index + 1 <= slides.length - 1 ) {
         if (index + 1 === slides.length - 1) {
           nextButton.classList.add('su_hidden');
@@ -180,7 +182,6 @@
 
       slides[index].classList.remove('su_fs-slide--active', 'su_mask-down', 'su_mask-up');
       rulers[index].style.cssText = this.slideIndicatorPositions[index].top;
-      //slides[index].classList.remove('su_mask-down');
 
       if (nextButton.classList.contains('su_hidden')) {
         nextButton.classList.remove('su_hidden');

@@ -71,10 +71,10 @@ button {
   margin-bottom: 1.85rem;
   overflow: auto;
   width: 100%; }
+  .su_fs-carousel .su_fs-slides {
+    display: flex;
+    justify-content: space-between; }
   .su_fs-carousel .su_fs-slide {
-    display: inline-block;
-    float: left;
-    margin-right: 5%;
     width: 30%; }
     .su_fs-carousel .su_fs-slide:last-child {
       margin-right: 0; }
@@ -85,12 +85,10 @@ button {
       color: #fff; }
   .su_fs-carousel.su_fs-carousel--active {
     animation: .2s ease-in forwards coverUp;
-    background-color: rgba(20, 19, 33, 0.8);
+    background-color: rgba(20, 19, 33, 0.6);
     color: #ababab;
-    float: unset;
     margin-bottom: 0;
-    position: fixed;
-    overflow: hidden; }
+    position: fixed; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
@@ -102,26 +100,16 @@ button {
         width: 100vw;
         transition: bottom 0.5s cubic-bezier(1, 0.01, 0.55, 0.99); }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
-      margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
       position: absolute;
-      float: unset;
-      left: 0;
-      top: 0;
       width: 100%;
-      height: 100%;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
       user-select: none;
       transition: clip-path 0s ease-out .5s; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down {
-        clip-path: inset(0% 0 100% 0); }
+        clip-path: inset(0% 0 70% 0); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
-        clip-path: inset(100% 0 0% 0); }
-      .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down--initial {
-        animation: .5s ease-out maskDown; }
+        clip-path: inset(70% 0 0% 0); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
         clip-path: inset(0 0 0 0);
         pointer-events: none;
@@ -134,8 +122,7 @@ button {
   .su_fs-carousel .su_fs-carousel-icons {
     display: none;
     position: relative;
-    height: 50px;
-    z-index: 120; }
+    height: 50px; }
     .su_fs-carousel .su_fs-carousel-icons .su_icon--close,
     .su_fs-carousel .su_fs-carousel-icons .su_icon--next,
     .su_fs-carousel .su_fs-carousel-icons .su_icon--prev {
