@@ -1,5 +1,4 @@
 (function () {
-
 	'use strict';
 
 	var fsCarousel = {
@@ -55,17 +54,11 @@
 
     },
 
-    openCarousel: function () {
-
-      this.loadSlideIndicators('span');  
-      this.getCarouselEl().classList.add('su_fs-carousel--active');      
-
-    },
-
     loadSlideIndicators: function () {
 
       var slideWrapper = this.getElement('.su_fs-slides'),
           num = this.getSlides().length,
+          slideHeight = document.querySelector('.su_fs-carousel--active .su_fs-slide').offsetHeight,
           fragment = document.createDocumentFragment(),
           span, val, bottom, top, i, position;
 
@@ -77,8 +70,9 @@
           span = document.createElement('span');
           val = 8 - i * 3 + 'px';
           top = 'bottom: calc(100% - ' + val + ')';
-          val = 47 - i * 3;
-          bottom = 'bottom: ' + val + 'px';
+          val = (slideHeight - 8) + i * 3;
+          console.log(val);
+          bottom = 'top: ' + val + 'px';
           position.top = top;
           position.bottom = bottom;
 
@@ -90,11 +84,7 @@
         }
 
         slideWrapper.appendChild(fragment);
-
       }
-
-      
-      
     },
 
     positionSlideIndicators: function () {
@@ -119,15 +109,12 @@
         rulerPosition = this.slideIndicatorPositions[index].top;
       } else if ( rulerPosition.includes(this.slideIndicatorPositions[index].top) ) {
         rulerPosition = this.slideIndicatorPositions[index].bottom;
-      } else {
-        console.log('nothing');
       }
     },
 
-    positionActiveSlideIndicator: function () {
+    positionActiveSlideIndicator: function (index) {
 
-      var rulers = this.getElements('.su_fs-slides > span'),
-          index = this.currentSlidePosition();
+      var rulers = this.getElements('.su_fs-slides > span');
       
       if ( rulers ) {
         rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
@@ -155,20 +142,24 @@
           nextButton = this.getElement(this.elements.buttons.nextBtn),
           prevButton = this.getElement(this.elements.buttons.prevBtn);
 
-      slides[index].classList.remove('su_fs-slide--active', 'su_mask-up', 'su_mask-down');
-      rulers[index].style.cssText = this.slideIndicatorPositions[index].bottom;
-      if (prevButton.classList.contains('su_hidden')) {
-        prevButton.classList.remove('su_hidden');
-      }
-      if ( index + 1 <= slides.length - 1 ) {
-        if (index + 1 === slides.length - 1) {
-          nextButton.classList.add('su_hidden');
-        }
-        slides[index + 1].classList.add('su_mask-down');
-        void slides[index + 1].offsetWidth;
-        slides[index + 1].classList.add('su_fs-slide--active');
-      }
+      if( curPos < slides.length ){
+        console.log(curPos);
+        slides[curPos].classList.remove('su_mask-up');
+        slides[curPos].classList.add('su_mask-down');
+        rulers[curPos].style.cssText = this.slideIndicatorPositions[curPos].bottom;
+        curPos++;
 
+        if ( prevButton.classList.contains('su_hidden') ) {
+          prevButton.classList.remove('su_hidden');
+        }
+        if ( curPos === slides.length - 1 ) {
+          nextButton.classList.add('su_hidden');
+
+        }
+        if ( curPos < slides.length ) {
+          slides[curPos].classList.add('su_fs-slide--active');
+        }
+      }
     },
 
     prevSlide: function () {
@@ -178,50 +169,48 @@
           nextButton = this.getElement(this.elements.buttons.nextBtn),
           prevButton = this.getElement(this.elements.buttons.prevBtn);
 
-      slides[index].classList.remove('su_fs-slide--active', 'su_mask-down', 'su_mask-up');
-      rulers[index].style.cssText = this.slideIndicatorPositions[index].top;
-      //slides[index].classList.remove('su_mask-down');
+      if(curPos > 0){
+        curPos--;
+        slides[curPos].classList.remove('su_mask-down');
+        slides[curPos].classList.add('su_mask-up');
+        rulers[curPos].style.cssText = this.slideIndicatorPositions[curPos].top;
 
-      if (nextButton.classList.contains('su_hidden')) {
-        nextButton.classList.remove('su_hidden');
-      }
-      if ( index - 1 >= 0) {
-        if (index - 1 === 0) {
+        if (nextButton.classList.contains('su_hidden')) {
+          nextButton.classList.remove('su_hidden');
+        }
+        if (curPos === 0) {
           prevButton.classList.add('su_hidden');
         }
-        slides[index - 1].classList.add('su_mask-up');
-        void slides[index - 1].offsetWidth;
-        slides[index - 1].classList.add('su_fs-slide--active');
         
       }
     }
 
   },
+  curPos = 0,
 
   slides = fsCarousel.getElements(fsCarousel.elements.slide);
 
   slides && slides.forEach(function (element, index) {
-    element.addEventListener('mouseover', function (e) {
-      var pos,
+    element.addEventListener('mouseover', function () {
+      var pos = index,
           slides = fsCarousel.getSlides(),
           nextButton = fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn),
           prevButton = fsCarousel.getElement(fsCarousel.elements.buttons.prevBtn);
 
-      fsCarousel.openCarousel();
-      
+      fsCarousel.getCarouselEl().classList.add('su_fs-carousel--active'); 
       this.classList.add('su_fs-slide--active');
-      
-      pos = fsCarousel.currentSlidePosition();
+      fsCarousel.loadSlideIndicators('span');  
 
-      if (pos === 0) {
-        prevButton.classList.add('su_hidden');
-      } else if (pos === slides.length - 1) {
+      fsCarousel.positionActiveSlideIndicator(index);
+      curPos = index;
+      if (pos === slides.length - 1) {
         nextButton.classList.add('su_hidden');
+      } else if (pos === 0) {
+        prevButton.classList.add('su_hidden');
       }
 
-      fsCarousel.positionActiveSlideIndicator();
-
     }, false);
+
   });
 
   fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn).addEventListener('click', function (event) {
@@ -238,6 +227,11 @@
     var activeSlie = fsCarousel.getElement('.su_fs-slide--active');
 
     activeSlie && activeSlie.classList.remove('su_fs-slide--active');
+
+    slides && slides.forEach(function (element, index) {
+      element.classList.remove('su_mask-up', 'su_mask-down');
+    });
+
   }, false);
 
   // document.body.addEventListener('keyup', function (event) {
@@ -256,5 +250,9 @@
   //   }
     
   // }, false);
+
+  function getElementHeight(selector) {
+    return document.querySelector(selector).offsetHeight;
+  } 
 
 }());

@@ -41,23 +41,23 @@ button {
 .su_hidden {
   display: none; }
 
-@keyframes maskDown {
-  from {
-    clip-path: inset(0 0 100% 0); }
-  to {
-    clip-path: inset(0 0 0 0); } }
 @keyframes maskUp {
+  0% {
+    clip-path: inset(100% 0 0 0); }
+  100% {
+    clip-path: inset(0 0 0 0); } }
+@keyframes maskDown {
   0% {
     clip-path: inset(0 0 0 0); }
   100% {
-    clip-path: inset(0 0 100% 0); } }
+    clip-path: inset(100% 0 0 0); } }
 @keyframes coverUp {
   0% {
     opacity: .5;
-    width: 95%;
-    height: 95%;
-    top: 5%;
-    left: 2.5%; }
+    width: 98%;
+    height: 98%;
+    top: 2%;
+    left: 1%; }
   100% {
     opacity: 1;
     top: 0;
@@ -71,13 +71,11 @@ button {
   margin-bottom: 1.85rem;
   overflow: auto;
   width: 100%; }
+  .su_fs-carousel .su_fs-slides {
+    display: flex;
+    justify-content: space-between; }
   .su_fs-carousel .su_fs-slide {
-    display: inline-block;
-    float: left;
-    margin-right: 5%;
     width: 30%; }
-    .su_fs-carousel .su_fs-slide:last-child {
-      margin-right: 0; }
     .su_fs-carousel .su_fs-slide figcaption {
       text-align: center;
       display: none;
@@ -87,50 +85,46 @@ button {
     animation: .2s ease-in forwards coverUp;
     background-color: rgba(20, 19, 33, 0.8);
     color: #ababab;
-    float: unset;
-    margin-bottom: 0;
     position: fixed;
     overflow: hidden; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
-      position: relative; }
+      background-color: #141321;
+      position: relative;
+      height: 100%; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slides span {
         background-color: gray;
         position: absolute;
         height: 3px;
         width: 100vw;
-        transition: bottom 0.5s cubic-bezier(1, 0.01, 0.55, 0.99); }
+        transition: bottom .6s ease-out; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
-      margin-right: 0;
       padding: 10px 0;
       pointer-events: none;
       position: absolute;
-      float: unset;
-      left: 0;
-      top: 0;
       width: 100%;
-      height: 100%;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
       user-select: none;
-      transition: clip-path 0s ease-out .5s; }
+      opacity: 0; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide:first-of-type {
+        z-index: 100; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide:nth-of-type(2) {
+        z-index: 90; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide:nth-of-type(3) {
+        z-index: 80; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down, .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
+        opacity: 1; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down {
-        clip-path: inset(0% 0 100% 0); }
+        animation: maskDown 1s forwards ease-out; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
-        clip-path: inset(100% 0 0% 0); }
+        animation: maskUp 1s forwards ease-out; }
+      .su_fs-carousel.su_fs-carousel--active .su_fs-slide.evo_s-is-activated figcaption {
+        display: block;
+        padding-top: 10px; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down--initial {
         animation: .5s ease-out maskDown; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
-        clip-path: inset(0 0 0 0);
-        pointer-events: none;
-        position: relative;
-        z-index: 1;
-        transition: clip-path 0.5s cubic-bezier(1, 0.01, 0.55, 0.99); }
-        .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active figcaption {
-          display: block;
-          padding-top: 10px; }
+        opacity: 1; }
   .su_fs-carousel .su_fs-carousel-icons {
     display: none;
     position: relative;
