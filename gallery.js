@@ -143,7 +143,6 @@
           prevButton = this.getElement(this.elements.buttons.prevBtn);
 
       if( curPos < slides.length ){
-        console.log(curPos);
         slides[curPos].classList.remove('su_mask-up');
         slides[curPos].classList.add('su_mask-down');
         rulers[curPos].style.cssText = this.slideIndicatorPositions[curPos].bottom;

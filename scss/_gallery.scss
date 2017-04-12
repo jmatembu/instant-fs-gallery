@@ -58,10 +58,9 @@
 
   &.su_fs-carousel--active {
     animation: .2s ease-in forwards coverUp;
-    background-color: rgba(20, 19, 33, 0.8);
+    background-color: rgba(20, 19, 33, 0.6);
     color: #ababab;
     position: fixed;
-    overflow: hidden;
     
     .su_fs-carousel-icons {
       display: block;
@@ -124,8 +123,7 @@
       }
 
       &.su_fs-slide--active {
-        opacity: 1;
-        
+        opacity: 1;        
       }
     }
   }
@@ -134,7 +132,6 @@
     display: none;
     position: relative;
     height: 50px;
-    z-index: 120;
 
     .su_icon--close,
     .su_icon--next,
@@ -182,5 +179,7 @@
   .su_hidden {
     visibility: hidden;
   }
+
+
 
 }
