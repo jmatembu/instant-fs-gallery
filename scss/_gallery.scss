@@ -17,19 +17,34 @@
 }
 @keyframes coverUp {
   0% {
-    opacity: .5;
+    opacity: .7;
     width: 98%;
     height: 98%;
-    top: 2%;
+    top: 1%;
     left: 1%;
   }
   100% {
     opacity: 1;
     top: 0;
     left: 0;
-    margin: 0 auto;
     height: 100vh;
     width: 100%;
+  }
+}
+@keyframes coverDown {
+  0% {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+  }
+  100% {
+    opacity: 3;
+    width: 50%;
+    height: 50%;
+    top: 5%;
+    left: 5%;
   }
 }
 
@@ -37,7 +52,6 @@
   background-color: transparent;
   display: block;
   margin-bottom: 1.85rem;
-  overflow: auto;
   width: 100%;
   
   .su_fs-slides {
@@ -61,21 +75,26 @@
     background-color: rgba(20, 19, 33, 0.6);
     color: #ababab;
     position: fixed;
+
+    &.su_fs-carousel--close {
+      animation: .3s ease-in forwards coverDown;
+    }
     
     .su_fs-carousel-icons {
+      background-color: transparent;
       display: block;
     }
 
     .su_fs-slides {
-      background-color: rgb(20, 19, 33);
+      background-color: transparent;
       position: relative;
       height: 100%;
-      span {
-        background-color: gray;
+      .su_fs-carousel-bars {
+        background-color: #ababab;
         position: absolute;
         height: 3px;
         width: 100vw;
-        transition: bottom .6s ease-out;
+        transition: bottom .6s cubic-bezier(.09,.73,.99,.3), top .6s cubic-bezier(.09,.73,.99,.3);
       }
     }
 
@@ -103,23 +122,19 @@
       }
 
       &.su_mask-down {
-        animation: maskDown 1s forwards ease-out;
+        animation: maskDown .7s forwards cubic-bezier(.09,.73,.99,.3);
       }
       &.su_mask-up {
-        animation: maskUp 1s forwards ease-out;
+        animation: maskUp .7s forwards cubic-bezier(.09,.73,.99,.3);
+      }
+      
+      figcaption {
+        display: block;
+        padding-top: 10px;
       }
 
       &.evo_s-is-activated {
-        figcaption {
-          display: block;
-          padding-top: 10px;
-        }
-      }
-      
-      
-
-      &.su_mask-down--initial {
-        animation: .5s ease-out maskDown;
+        
       }
 
       &.su_fs-slide--active {
