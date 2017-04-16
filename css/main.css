@@ -41,84 +41,101 @@ button {
 .su_hidden {
   display: none; }
 
-@keyframes maskUp {
+@keyframes slide-up {
   0% {
     clip-path: inset(100% 0 0 0); }
   100% {
     clip-path: inset(0 0 0 0); } }
-@keyframes maskDown {
+@keyframes slide-down {
   0% {
     clip-path: inset(0 0 0 0); }
   100% {
     clip-path: inset(100% 0 0 0); } }
-@keyframes coverUp {
+@keyframes open-carousel {
   0% {
-    opacity: .7;
+    opacity: .3;
     width: 98%;
     height: 98%;
     top: 1%;
     left: 1%; }
+  50% {
+    opacity: 1; }
   100% {
-    opacity: 1;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100%; } }
-@keyframes coverDown {
+@keyframes close-carousel {
   0% {
-    opacity: 1;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 100%; }
+    width: 100%;
+    background-color: rgba(20, 19, 33, 0.6);
+    position: fixed; }
   100% {
-    opacity: 3;
-    width: 50%;
-    height: 50%;
-    top: 5%;
-    left: 5%; } }
+    background-color: transparent;
+    width: 96%;
+    top: 2%;
+    left: 2%;
+    height: 96%; } }
+@keyframes open-slides {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 .su_fs-carousel {
   background-color: transparent;
   display: block;
   margin-bottom: 1.85rem;
-  width: 100%; }
+  width: 100%;
+  transition: all .3s ease-in; }
   .su_fs-carousel .su_fs-slides {
     display: flex;
     justify-content: space-between; }
   .su_fs-carousel .su_fs-slide {
     width: 30%; }
+    .su_fs-carousel .su_fs-slide:hover {
+      cursor: pointer; }
     .su_fs-carousel .su_fs-slide figcaption {
       text-align: center;
       display: none;
-      opacity: 0.7;
-      color: #fff; }
+      color: #5a5565; }
   .su_fs-carousel.su_fs-carousel--active {
-    animation: .2s ease-in forwards coverUp;
+    animation: 0.3s cubic-bezier(0.19, 1, 0.22, 1) forwards open-carousel;
     background-color: rgba(20, 19, 33, 0.6);
     color: #ababab;
     position: fixed; }
+    .su_fs-carousel.su_fs-carousel--active.su_fs-carousel--open {
+      animation: 0.3s cubic-bezier(0.19, 1, 0.22, 1) forwards open-carousel; }
+      .su_fs-carousel.su_fs-carousel--active.su_fs-carousel--open .su_fs-slides {
+        animation: 1s cubic-bezier(0.19, 1, 0.22, 1) forwards open-slides; }
     .su_fs-carousel.su_fs-carousel--active.su_fs-carousel--close {
-      animation: .3s ease-in forwards coverDown; }
+      animation: 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards close-carousel; }
+      .su_fs-carousel.su_fs-carousel--active.su_fs-carousel--close .su_fs-carousel-icons {
+        display: none; }
+      .su_fs-carousel.su_fs-carousel--active.su_fs-carousel--close figcaption {
+        display: none; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-carousel-icons {
-      background-color: transparent;
       display: block; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slides {
-      background-color: transparent;
       position: relative;
       height: 100%; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slides .su_fs-carousel-bars {
-        background-color: #ababab;
+        background-color: #41485f;
         position: absolute;
-        height: 3px;
-        width: 100vw;
-        transition: bottom 0.6s cubic-bezier(0.09, 0.73, 0.99, 0.3), top 0.6s cubic-bezier(0.09, 0.73, 0.99, 0.3); }
+        height: 2px;
+        display: block;
+        width: 100%;
+        z-index: 100; }
     .su_fs-carousel.su_fs-carousel--active .su_fs-slide {
+      background-color: #1c1728;
+      opacity: 0;
       padding: 10px 0;
       pointer-events: none;
       position: absolute;
-      width: 100%;
       user-select: none;
-      opacity: 0; }
+      width: 100%; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide:first-of-type {
         z-index: 100; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide:nth-of-type(2) {
@@ -128,22 +145,23 @@ button {
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down, .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
         opacity: 1; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-down {
-        animation: maskDown 0.7s forwards cubic-bezier(0.09, 0.73, 0.99, 0.3); }
+        animation: slide-down 0.7s forwards cubic-bezier(0.19, 1, 0.22, 1); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_mask-up {
-        animation: maskUp 0.7s forwards cubic-bezier(0.09, 0.73, 0.99, 0.3); }
+        animation: slide-up 0.7s forwards cubic-bezier(0.19, 1, 0.22, 1); }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide figcaption {
         display: block;
         padding-top: 10px; }
       .su_fs-carousel.su_fs-carousel--active .su_fs-slide.su_fs-slide--active {
         opacity: 1; }
   .su_fs-carousel .su_fs-carousel-icons {
+    background-color: #1c1728;
     display: none;
     position: relative;
     height: 50px; }
     .su_fs-carousel .su_fs-carousel-icons .su_icon--close,
     .su_fs-carousel .su_fs-carousel-icons .su_icon--next,
     .su_fs-carousel .su_fs-carousel-icons .su_icon--prev {
-      color: #ababab;
+      color: #5f5672;
       cursor: pointer;
       height: 100%;
       padding: 7px 0;

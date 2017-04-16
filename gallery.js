@@ -45,15 +45,16 @@
 
     closeCarousel: function () {
       var nextButton = this.getElement(this.elements.buttons.nextBtn),
-          prevButton = this.getElement(this.elements.buttons.prevBtn);
+          prevButton = this.getElement(this.elements.buttons.prevBtn),
+          carousel = this.getCarouselEl();
 
       nextButton.classList.remove('su_hidden');
       prevButton.classList.remove('su_hidden');
-      this.getCarouselEl().classList.remove('su_fs-carousel--active');
-      // this.getCarouselEl().classList.add('su_fs-carousel--close');
-      // setTimeout(function() {
-      //   fsCarousel.getCarouselEl().classList.remove('su_fs-carousel--active', 'su_fs-carousel--close');
-      // }, 2000);
+      carousel.classList.remove('su_fs-carousel--open');
+      carousel.classList.add('su_fs-carousel--close');
+      setTimeout(function() {
+        fsCarousel.getCarouselEl().classList.remove('su_fs-carousel--close', 'su_fs-carousel--active');
+      }, 300);
 
       
       this.removeElements('.su_fs-slides span');
@@ -64,7 +65,7 @@
 
       var slideWrapper = this.getElement('.su_fs-slides'),
           num = this.getSlides().length,
-          slideHeight = document.querySelector('.su_fs-carousel--active .su_fs-slide').offsetHeight,
+          slideHeight = document.querySelector('.su_fs-carousel.su_fs-carousel--active .su_fs-slide').offsetHeight,
           fragment = document.createDocumentFragment(),
           span, val, bottom, top, i, position;
 
@@ -75,8 +76,8 @@
           position = {}; // reset object
           span = document.createElement('span');
           span.setAttribute('class', 'su_fs-carousel-bars');
-          val = 8 - i * 3 + 'px';
-          top = 'bottom: calc(100% - ' + val + ')';
+          val = i * 3;
+          top = 'top: ' + val + 'px';
           val = (slideHeight - 39) + i * 3;
           bottom = 'top: ' + val + 'px';
           position.top = top;
@@ -105,30 +106,35 @@
 
     nextSlide: function () {
       var slides = this.getSlides(),
+          slideWrapper = this.getElement('.su_fs-slides'),
           rulers = this.getElements('.su_fs-slides > span'),
           //captions = this.getElements('.su_fs-slide figcaption'),
           nextButton = this.getElement(this.elements.buttons.nextBtn),
           prevButton = this.getElement(this.elements.buttons.prevBtn);
 
 
-      if( curPos < slides.length ){
-        slides[curPos].classList.remove('su_mask-up');
-        slides[curPos].classList.add('su_mask-down');
-        //captions[curPos].style.cssText = 'display:block;';
-        curPos++;
-        rulers[curPos].style.cssText = this.slideIndicatorPositions[curPos].bottom;
+      if( curPos < slides.length && slides){
 
+        var slideHeight = slides[curPos].offsetHeight;
 
-        if ( prevButton.classList.contains('su_hidden') ) {
-          prevButton.classList.remove('su_hidden');
+        if ( slides[curPos] ) {
+          slideWrapper.style.height = slideHeight + 'px;';
+          slides[curPos].classList.remove('su_mask-up');
+          slides[curPos].classList.add('su_mask-down');
+          curPos++;
+          rulers[curPos].style.cssText = 'transition: all .3s cubic-bezier(0.190, 1.000, 0.220, 1.000)';          
+          rulers[curPos].style.cssText += this.slideIndicatorPositions[curPos].bottom;
+          if ( prevButton.classList.contains('su_hidden') ) {
+            prevButton.classList.remove('su_hidden');
+          }
+          if ( curPos === slides.length - 1 ) {
+            nextButton.classList.add('su_hidden');
+          }
+          if ( curPos < slides.length ) {
+            slides[curPos].classList.add('su_fs-slide--active');
+          }
         }
-        if ( curPos === slides.length - 1 ) {
-          nextButton.classList.add('su_hidden');
 
-        }
-        if ( curPos < slides.length ) {
-          slides[curPos].classList.add('su_fs-slide--active');
-        }
       }
     },
 
@@ -138,18 +144,27 @@
           nextButton = this.getElement(this.elements.buttons.nextBtn),
           prevButton = this.getElement(this.elements.buttons.prevBtn);
 
-      if(curPos > 0){
-        rulers[curPos].style.cssText = this.slideIndicatorPositions[curPos].top;
-        curPos--;
-        slides[curPos].classList.remove('su_mask-down');
-        slides[curPos].classList.add('su_mask-up');
+      if( curPos > 0 ){
+
+        if ( rulers[curPos] ) {
+          console.log('thisSlide: ' + curPos);
+          curPos--;
+          console.log('prevSlide: ' + curPos);
+          slides[curPos].classList.remove('su_mask-down');
+          slides[curPos].classList.add('su_mask-up');
+          rulers[curPos].style.cssText = 'transition: all .3s cubic-bezier(0.190, 1.000, 0.220, 1.000)';          
+          rulers[curPos].style.cssText += this.slideIndicatorPositions[curPos].top;
+
+          if ( nextButton.classList.contains('su_hidden') ) {
+            nextButton.classList.remove('su_hidden');
+          }
+
+          if ( curPos === 0 ) {
+            prevButton.classList.add('su_hidden');
+          }
+        }
         
-        if (nextButton.classList.contains('su_hidden')) {
-          nextButton.classList.remove('su_hidden');
-        }
-        if (curPos === 0) {
-          prevButton.classList.add('su_hidden');
-        }
+        
         
       }
     }
@@ -160,21 +175,21 @@
   slides = fsCarousel.getElements(fsCarousel.elements.slide);
 
   slides && slides.forEach(function (element, index) {
-    element.addEventListener('mouseover', function () {
+    element.addEventListener('click', function () {
       var pos = index,
           slides = fsCarousel.getSlides(),
           nextButton = fsCarousel.getElement(fsCarousel.elements.buttons.nextBtn),
           prevButton = fsCarousel.getElement(fsCarousel.elements.buttons.prevBtn);
 
-      fsCarousel.getCarouselEl().classList.add('su_fs-carousel--active'); 
+      fsCarousel.getCarouselEl().classList.add('su_fs-carousel--active', 'su_fs-carousel--open'); 
       this.classList.add('su_fs-slide--active');
       fsCarousel.loadSlideIndicators('span');  
 
       fsCarousel.positionActiveSlideIndicator(index);
       curPos = index;
-      if (pos === slides.length - 1) {
+      if (index === slides.length - 1) {
         nextButton.classList.add('su_hidden');
-      } else if (pos === 0) {
+      } else if (index === 0) {
         prevButton.classList.add('su_hidden');
       }
 
@@ -193,7 +208,12 @@
   fsCarousel.getElement(fsCarousel.elements.buttons.closeBtn).addEventListener('click', function (event) {
     
     fsCarousel.closeCarousel();
-    var activeSlide = fsCarousel.getElement('.su_fs-slide--active');
+    var activeSlide = fsCarousel.getElement('.su_fs-slide--active'),
+        slideWrapper = fsCarousel.getElement('.su_fs-slides');
+
+    if (slideWrapper) {
+      slideWrapper.style.height = 'unset';
+    }
 
     activeSlide && activeSlide.classList.remove('su_fs-slide--active');
 
@@ -212,9 +232,11 @@
       fsCarousel.closeCarousel();
       activeSlide && activeSlide.classList.remove('su_fs-slide--active');
 
-    } else if ( event.keyCode === 39 ) {
+    }
+
+    if ( event.keyCode === 39 && curPos < slides.length - 1) {
       fsCarousel.nextSlide();
-    } else if ( event.keyCode === 37 ) {
+    } else if ( event.keyCode === 37 && curPos > 0) {
       fsCarousel.prevSlide();
     }
     
